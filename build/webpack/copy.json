@@ -18,5 +18,9 @@
 	{
 		"from": "options/options.html",
 		"to": "options/options.html"
+	},
+	{
+		"from": "_locales",
+		"to": "_locales"
 	}
 ]
