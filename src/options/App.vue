@@ -1,6 +1,9 @@
 <template>
 	<div class="main">
-		<md-tabs class="md-primary main-menu" md-elevation="1" md-active-tab="tab-rule-list">
+		<md-tabs class="md-primary main-menu" md-elevation="1" md-active-tab="tab-rule-versions">
+			<md-tab id="tab-rule-versions" md-label="切版本">
+				<Versions />
+			</md-tab>
 			<md-tab id="tab-rule-list" :md-label="t('rule_list')">
 				<div class="loading-box" v-show="isLoadingRules">
 					<md-progress-spinner md-mode="indeterminate" :md-stroke="4"></md-progress-spinner>
@@ -392,6 +395,7 @@ import rules from '../core/rules';
 import file from '../core/file';
 import storage from '../core/storage';
 import browserSync from '../core/browserSync';
+import Versions from '../compoments/Versions'
 
 const commonHeader = require('./headers.json');
 //https://github.com/inexorabletash/text-encoding/blob/3f330964c0e97e1ed344c2a3e963f4598610a7ad/lib/encoding.js#L342-L796
@@ -401,6 +405,9 @@ const initOptions = {};
 displayOptions.forEach(it => initOptions[it] = false);
 
 export default {
+	components: {
+		Versions,
+	},
 	data() {
 		return {
 			isSupportStreamFilter: utils.IS_SUPPORT_STREAM_FILTER,
@@ -553,7 +560,7 @@ export default {
 				rule: {}
 			});
 			function appendRule(table, response) {
-				response.forEach(item => {
+				response.filter(item => item.group !== 'versions').forEach(item => {
 					if (typeof(_this.group[item.group]) === "undefined") {
 						_this.$set(_this.group, item.group, {
 							name: item.group,
