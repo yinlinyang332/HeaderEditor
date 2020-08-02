@@ -1,6 +1,6 @@
 <template>
 	<div class="main">
-		<md-tabs class="md-primary main-menu" md-elevation="1" md-active-tab="tab-rule-versions">
+		<md-tabs class="md-primary main-menu" md-elevation="1" md-active-tab="tab-rule-versions" @md-changed="onTabsChange">
 			<md-tab id="tab-rule-versions" md-label="切版本">
 				<Versions />
 			</md-tab>
@@ -293,7 +293,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="float-button">
+		<div class="float-button" v-show="!isVesionsTable">
 			<md-speed-dial class="md-bottom-right" md-event="click">
 				<md-speed-dial-target class="md-primary" :title="t('batch_mode')" @click="onBatchEnter">
 					<md-icon v-show="isBatch" class="iconfont icon-exit-to-app"></md-icon>
@@ -410,6 +410,7 @@ export default {
 	},
 	data() {
 		return {
+			isVesionsTable: true,
 			isSupportStreamFilter: utils.IS_SUPPORT_STREAM_FILTER,
 			isLoadingRules: true,
 			isShowEdit: false,
@@ -1208,6 +1209,9 @@ export default {
 				method: "openURL",
 				url: utils.t('url_third_party_rules')
 			});
+		},
+		onTabsChange(activeTab) {
+			this.isVesionsTable = activeTab === 'tab-rule-versions'
 		}
 	},
 	created() {
