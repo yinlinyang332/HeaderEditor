@@ -14,12 +14,12 @@ k<template>
           >删除</md-button>
 
           <md-button
-            v-show="isShowBatchButtons && this.selectedRules.some(item => !item.enable)"
+            v-show="isShowBatchButtons"
             class="action-item md-raised"
             @click="onBatchSwitch(true)"
           >开启</md-button>
           <md-button
-            v-show="isShowBatchButtons && this.selectedRules.some(item => item.enable)"
+            v-show="isShowBatchButtons && this.selectedRules.some(item => item.en)"
             class="action-item md-raised"
             @click="onBatchSwitch(false)"
           >关闭</md-button>
@@ -61,13 +61,12 @@ k<template>
     <md-dialog :md-active.sync="showDialog" :md-fullscreen="false" class="dialog">
       <md-dialog-title v-show="status !== 'edit'">添加版本</md-dialog-title>
       <md-dialog-title v-show="status === 'edit'">编辑版本</md-dialog-title>
-      <md-dialog-conten class="dialog-content">
+      <md-dialog-content class="dialog-content">
         <FormGroup>
           <template v-slot:left>产品：</template>
           <template v-slot:right>
             <md-field>
               <md-select v-model="rule.product" >
-                <md-option value="test">test</md-option>
                 <md-option
                   v-for="product in products"
                   :value="product.value"
@@ -111,7 +110,7 @@ k<template>
             <div class="redirect-url" :title="redirectUrl">{{makeRedirectUrl(rule)}}</div>
           </template>
         </FormGroup>
-      </md-dialog-conten>
+      </md-dialog-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">取消</md-button>
         <md-button
@@ -369,10 +368,6 @@ export default {
   height: 32px;
   line-height: 32px;
   size: 32px;
-}
-
-.action-item__margin {
-  margin-left: 10px;
 }
 
 .dialog-content {
